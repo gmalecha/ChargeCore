@@ -4,10 +4,13 @@
  *)
 Require Export ChargeCore.Logics.ILogic.
 
+Set Universe Polymorphism.
+
 Section logic.
-  Context {L : Type}.
-  Context {ILO : ILogicOps L}.
-  Context {IL : ILogic L}.
+  Polymorphic Universes L T.
+  Polymorphic Context {L : Type}.
+  Context {ILO : ILogic@{L T} L}.
+  Context {IL : ILogicOk@{L T} L}.
 
   Theorem lcut : forall P Q R : L,
       P |-- R ->
@@ -172,9 +175,10 @@ Local Ltac charge_tauto :=
         | charge_use ; charge_tauto ].
 
 Section logic2.
-  Context {L : Type}.
-  Context {ILO : ILogicOps L}.
-  Context {IL : ILogic L}.
+  Polymorphic Universes L T.
+  Polymorphic Context {L : Type}.
+  Context {ILO : ILogic@{L T} L}.
+  Context {IL : ILogicOk@{L T} L}.
 
   Definition liff (A B : L) : L :=
     (A -->> B) //\\ (B -->> A).
@@ -263,7 +267,7 @@ Section logic2.
     intros. charge_tauto.
   Qed.
 
-  Lemma land_lexists_ap : forall T (P : T -> L) Q R S,
+  Lemma land_lexists_ap : forall (T : Type@{T}) (P : T -> L) Q R S,
       (forall x, S //\\ P x //\\ Q |-- R) ->
       S //\\ (lexists P) //\\ Q |-- R.
   Proof.
@@ -274,7 +278,7 @@ Section logic2.
     charge_tauto.
   Qed.
 
-  Lemma land_lexistsL_ap : forall T (P : T -> L) R S,
+  Lemma land_lexistsL_ap : forall {T : Type@{T}} (P : T -> L) R S,
       (forall x, S //\\ P x |-- R) ->
       S //\\ (lexists P) |-- R.
   Proof.
@@ -285,7 +289,7 @@ Section logic2.
     charge_tauto.
   Qed.
 
-  Lemma land_lexistsR_ap : forall T (P : T -> L) R S,
+  Lemma land_lexistsR_ap : forall {T : Type@{T}} (P : T -> L) R S,
       (forall x, P x //\\ S |-- R) ->
       lexists P //\\ S |-- R.
   Proof.

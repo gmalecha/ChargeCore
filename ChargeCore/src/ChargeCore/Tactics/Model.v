@@ -1,10 +1,11 @@
+Require Import Coq.Setoids.Setoid.
+Require Import Coq.omega.Omega.
+
 Require Import ChargeCore.Logics.ILogic.
 Require Import ChargeCore.Logics.ILInsts.
 Require Import ChargeCore.Logics.BILInsts.
 Require Import ChargeCore.Logics.Later.
 
-Require Import Setoid.
-Require Import Omega.
 
 Set Implicit Arguments.
 Unset Strict Implicit.

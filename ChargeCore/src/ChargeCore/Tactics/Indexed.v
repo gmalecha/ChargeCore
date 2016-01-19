@@ -9,10 +9,12 @@ Require Import Coq.Classes.Morphisms.
 Require Import ChargeCore.Logics.ILogic.
 Require Import ChargeCore.Tactics.Tactics.
 
+Set Universe Polymorphism.
+
 Section indexed.
   Context {L : Type}
-          {ILO : ILogicOps L}
-          {IL : ILogic L}.
+          {ILO : ILogic L}
+          {IL : ILogicOk L}.
 
   (* Destruct *)
   Theorem destruct_top
@@ -143,8 +145,8 @@ Tactic Notation "charge" "split" constr(n) := charge_split_n n.
 
 Section demo.
   Context {L : Type}
-          {ILO : ILogicOps L}
-          {IL : ILogic L}.
+          {ILO : ILogic L}
+          {IL : ILogicOk L}.
 
   Goal forall D E F G : L,
       |-- (D -->> F) -->> E //\\ (F \\// D) -->> (E -->> F -->> G) -->> G.
