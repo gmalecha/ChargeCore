@@ -28,8 +28,12 @@ Ltac charge_intros :=
          end.
 
 Ltac charge_revert :=
-  first [ simple eapply landAdj
-        | simple eapply Lemmas.landAdj_true ].
+  lazymatch goal with
+  | |- ltrue |-- _ => fail
+  | |- _ =>
+    first [ simple eapply landAdj
+          | simple eapply Lemmas.landAdj_true ]
+  end.
 
 Ltac charge_trivial := apply ltrueR.
 
